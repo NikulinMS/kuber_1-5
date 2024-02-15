@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: dz5
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: main-fe
+  template:
+    metadata:
+      labels:
+        app: main-fe
+    spec:
+      containers:
+        - image: nginx:1.19.2
+          name: nginx
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-frontend
+  namespace: dz5
+spec:
+  ports:
+    - name: main-fe
+      port: 80
+  selector:
+    app: main-fe
